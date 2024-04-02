@@ -1,0 +1,18 @@
+{
+  "name": "dsl_language",
+  "version": "1.0.0",
+  "description": "implementing a language having functionalities over json-patch",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Suprith KG",
+  "license": "ISC",
+  "dependencies": {
+    "@hyperjump/browser": "^1.1.3",
+    "@hyperjump/json-schema": "^1.7.3",
+    "fast-json-patch": "^3.1.1",
+    "jsonschema": "^1.4.1"
+  }
+}

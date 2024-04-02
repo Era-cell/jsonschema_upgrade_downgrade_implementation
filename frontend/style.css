@@ -1,0 +1,264 @@
+body {
+    background: #f8fafe;
+    color: #1a1b38;
+}
+
+textarea.form-control {
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    font-size: 14px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #3457dc;
+    border-color: #2E4EC6;
+    box-shadow: none !important;
+}
+.btn-primary.disabled,
+.btn-primary.focus,
+.btn-primary:disabled,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #2E4EC6;
+    border-color: #2E4EC6;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #31407a;
+    border-color: #2c396d;
+    box-shadow: none !important;
+}
+.btn-secondary.disabled,
+.btn-secondary.focus,
+.btn-secondary:disabled,
+.btn-secondary:focus,
+.btn-secondary:hover,
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active {
+    background-color: #2c396d;
+    border-color: #2c396d;
+}
+
+.jumbotron {
+    color: #fff;
+    background-color: #1a1b38;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1036%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(26%2c 27%2c 56%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c616.641C112.926%2c605.341%2c193.256%2c510.508%2c286.587%2c445.938C376.363%2c383.828%2c495.014%2c346.006%2c536.902%2c245.195C578.583%2c144.883%2c536.918%2c30.657%2c501.861%2c-72.157C471.497%2c-161.206%2c403.007%2c-225.531%2c349.912%2c-303.2C288.592%2c-392.901%2c262.432%2c-514.707%2c165.614%2c-564.029C65.011%2c-615.279%2c-56.298%2c-591.862%2c-166.233%2c-566.138C-281.009%2c-539.281%2c-406.891%2c-508.121%2c-477.308%2c-413.59C-546.714%2c-320.416%2c-537.23%2c-192.378%2c-531.076%2c-76.357C-525.806%2c23.01%2c-477.595%2c109.165%2c-444.602%2c203.043C-407.771%2c307.842%2c-407.31%2c431.571%2c-325.978%2c507.232C-240.324%2c586.913%2c-116.405%2c628.289%2c0%2c616.641' fill='%2315162d'%3e%3c/path%3e%3cpath d='M1440 1149.3890000000001C1554.525 1171.5 1671.156 1133.712 1776.444 1083.518 1892.3 1028.286 2014.755 963.521 2071.432 848.365 2128.5789999999997 732.254 2099.849 595.853 2079.351 468.075 2059.147 342.131 2039.682 209.09699999999998 1953.759 114.82499999999999 1868.6399999999999 21.43399999999997 1738.0819999999999-6.738000000000056 1616.2-40.08299999999997 1496.397-72.85900000000004 1368.372-122.87599999999998 1252.991-76.89499999999998 1139.562-31.692000000000007 1077.1390000000001 88.55099999999999 1021.142 197.058 974.298 287.827 978.193 390.478 959.927 490.976 940.807 596.173 866.863 704.201 911.292 801.453 955.721 898.7049999999999 1088.5149999999999 909.1669999999999 1177.83 967.944 1268.444 1027.576 1333.492 1128.826 1440 1149.3890000000001' fill='%231f2043'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1036'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 600px;
+    margin-bottom: 0;
+    overflow: hidden;
+}
+
+.jumbotron h1 {
+    line-height: 1.2;
+}
+
+.jumbotron h1 svg {
+    max-width: 300px;
+}
+
+.jumbotron .more-details {
+    margin-top: 80px;
+    text-align: left;
+}
+
+.jumbotron .subtitle {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.jumbotron .more-details p {
+    font-size: 18px;
+}
+
+.jumbotron .json-code {
+    position: relative;
+}
+
+.jumbotron .json-code pre {
+    font-size: 11px;
+    color: #9fa6e9;
+    background: rgba(45, 40, 86, 0.6);
+    padding: 10px 15px;
+    border: 1px solid #2d2856;
+    border-radius: 5px;
+}
+
+.jumbotron .json-code-title {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: rgba(159, 166, 233, 0.6);
+}
+
+.jumbotron .json-result pre {
+    border: 1px solid rgba(240, 168, 0, 0.8);
+}
+
+.jumbotron .json-result .json-code-title {
+    color: rgba(240, 168, 0, 0.6);
+}
+
+.section {
+    padding: 40px 0;
+    border-bottom: 1px solid #dce3fe;
+}
+.section.last{
+    border-bottom: none;
+}
+
+.section pre {
+    font-size: 13px;
+    color: #9fa6e9;
+    background: #1f2043;
+    padding: 15px;
+    border: 1px solid #2d2856;
+    border-radius: 5px;
+}
+
+.badge {
+    font-size: 13px;
+}
+
+.badge-secondary {
+    color: #1f2043;
+    background-color: #f0a800;
+}
+
+.nohighlight {
+    color: #abaec7;
+}
+
+.hljs {
+    color: #abaec7;
+    font-weight: normal;
+}
+
+.hljs-subst {
+    color: #9fa6e9;
+}
+
+.hljs-title {
+    color: #f0a800;
+    font-weight: normal;
+}
+
+.hljs-name {
+    color: #a1feff;
+}
+
+.hljs-tag {
+    color: #ffffff;
+}
+
+.hljs-attr {
+    color: #f0a800;
+}
+
+.hljs-built_in,
+.hljs-selector-tag,
+.hljs-section {
+    color: #E66F51;
+}
+
+.hljs-keyword {
+    color: #E66F51;
+}
+
+.hljs-string,
+.hljs-attribute,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition,
+.hljs-code,
+.hljs-regexp,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-template-tag,
+.hljs-quote,
+.hljs-deletion {
+    color: #a0a7ea;
+}
+
+.hljs-meta,
+.hljs-meta .hljs-string {
+    color: #E66F51;
+}
+
+.hljs-comment {
+    color: #ac65ff;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-name,
+.hljs-strong {
+    font-weight: normal;
+}
+
+.hljs-literal,
+.hljs-number {
+    color: #fa658d;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+.wrap-subtitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.wrap-subtitle h2 {
+    margin-bottom: 0;
+}
+
+.fa-book {
+    width: 12px;
+    height: 12px;
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --%3E%3Cpath fill='white' d='M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z'/%3E%3C/svg%3E");
+}
+
+footer {
+    background: #1a1b38;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1095%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(26%2c 27%2c 56%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c663.138C125.389%2c689.264%2c275.39%2c658.694%2c363.692%2c565.916C451.154%2c474.02%2c391.843%2c318.306%2c439.927%2c200.908C485.037%2c90.771%2c649.017%2c26.924%2c632.743%2c-90.975C616.494%2c-208.697%2c458.183%2c-241.434%2c368.161%2c-319.013C293.635%2c-383.238%2c240.549%2c-471.506%2c149.095%2c-507.77C52.891%2c-545.918%2c-51.619%2c-537.23%2c-154.528%2c-526.275C-276.98%2c-513.239%2c-436.232%2c-539.846%2c-505.567%2c-438.076C-576.992%2c-333.239%2c-463.504%2c-193.986%2c-467.301%2c-67.188C-470.487%2c39.213%2c-563.638%2c140.633%2c-525.875%2c240.159C-488.005%2c339.965%2c-360.976%2c365.353%2c-277.795%2c432.258C-182.034%2c509.282%2c-120.31%2c638.07%2c0%2c663.138' fill='%2315162d'%3e%3c/path%3e%3cpath d='M1440 1145.2759999999998C1548.039 1136.366 1599.718 1008.404 1685.9569999999999 942.717 1763.286 883.817 1868.1 861.3330000000001 1920.375 779.38 1975.7759999999998 692.5260000000001 2009.153 581.1 1979.5639999999999 482.422 1950.6770000000001 386.084 1838.961 347.185 1769.089 274.843 1704.085 207.541 1673.166 98.02199999999999 1583.259 72.106 1493.373 46.196000000000026 1406.3 113.67700000000002 1318.099 144.844 1235.133 174.161 1142.405 185.84500000000003 1081.541 249.39299999999997 1019.438 314.23400000000004 1008.54 408.16499999999996 983.356 494.345 953.9010000000001 595.139 884.899 698.358 921.587 796.751 958.346 895.335 1079.1979999999999 926.851 1166.5140000000001 985.553 1255.937 1045.671 1332.612 1154.132 1440 1145.2759999999998' fill='%231f2043'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1095'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 30px 0;
+    color: #fff;
+}
+
+footer a {
+    color: #0da58e;
+}
+footer a:focus,
+footer a:hover {
+    color: #075e51;
+    text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+    .jumbotron .more-details {
+        margin-top: 40px;
+    }
+}

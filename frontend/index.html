@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"
+        integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script
+        nonce="6ad487dc-7e91-401a-bf70-5c2c98fd9420">try { (function (w, d) { !function (k, l, m, n) { k[m] = k[m] || {}; k[m].executed = []; k.zaraz = { deferred: [], listeners: [] }; k.zaraz.q = []; k.zaraz._f = function (o) { return async function () { var p = Array.prototype.slice.call(arguments); k.zaraz.q.push({ m: o, a: p }) } }; for (const q of ["track", "set", "debug"]) k.zaraz[q] = k.zaraz._f(q); k.zaraz.init = () => { var r = l.getElementsByTagName(n)[0], s = l.createElement(n), t = l.getElementsByTagName("title")[0]; t && (k[m].t = l.getElementsByTagName("title")[0].text); k[m].x = Math.random(); k[m].w = k.screen.width; k[m].h = k.screen.height; k[m].j = k.innerHeight; k[m].e = k.innerWidth; k[m].l = k.location.href; k[m].r = l.referrer; k[m].k = k.screen.colorDepth; k[m].n = l.characterSet; k[m].o = (new Date).getTimezoneOffset(); if (k.dataLayer) for (const x of Object.entries(Object.entries(dataLayer).reduce(((y, z) => ({ ...y[1], ...z[1] })), {}))) zaraz.set(x[0], x[1], { scope: "page" }); k[m].q = []; for (; k.zaraz.q.length;) { const A = k.zaraz.q.shift(); k[m].q.push(A) } s.defer = !0; for (const B of [localStorage, sessionStorage]) Object.keys(B || {}).filter((D => D.startsWith("_zaraz_"))).forEach((C => { try { k[m]["z_" + C.slice(7)] = JSON.parse(B.getItem(C)) } catch { k[m]["z_" + C.slice(7)] = B.getItem(C) } })); s.referrerPolicy = "origin"; s.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(k[m]))); r.parentNode.insertBefore(s, r) };["complete", "interactive"].includes(l.readyState) ? zaraz.init() : k.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document) } catch (e) { throw fetch("/cdn-cgi/zaraz/t"), e; };</script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonschema@1.4.1/lib/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fast-json-patch/3.1.1/dist/fast-json-patch.min.js"></script>
+</head>
+
+<body>
+    <div class="container" style="padding: 10px">
+        <h2 style="text-align: center;">patchschema DSL</h2>
+        <p>Input JSON and one or more patch commands below and see magic happen:</p>
+        <p>patch operations: add, remove, replace, move, copy, test, split_and_join, reduce, remove_all, replace_all, move_all</p>
+
+        <p><b>"split_and_join"</b> takes array given the "path", with two other parameters "split_on", "join_on"</p>
+        <p><b>"reduce"</b> is only on Array. 
+            <br>Eg: { "op": "reduce", "path":"/arr", "operation":"add" }
+        </p>
+
+        <p>"all" indicates iteration - remove_all, replace_all, move_all
+            <br>----"having", "except", "from" takes array: The array can contain any of keys/indices/schemas 
+        </p>
+
+        <p><b>"remove_all"</b> - takes: "path", either "having"/"except" 
+            <br>{ "op":"remove_all", "path":"/properties", "having":["items", {"type":"string"}] }
+            <br>{ "op":"remove_all", "path":"/arr", "except":[0, {"type":"string"}, {"const":3}] }
+        </p>
+        <p><b>"replace_all"</b> - takes: "path", "from" array, "to" array
+            <br>----"to" contains direct values. Whatever is in the "to" array replaces respective "from" evaluation location
+            <br>{ "op": "replace_all", "path": "/arr", "from": [0, { "type": "array" }], "to": ["none", true] }
+        </p>
+
+        <p><b>"move_all"</b> - takes: "path", "from" array, "to" array
+            <br>----"from" and "to" takes array of regexes, schemas unlike replace_all which takes keys/indicies
+            <br>----how "from" and "to" schemas work is, if schema matches in "from" that value will be moved to the value which matches "to" schema
+            <br>{ "op": "move_all", "path": "/properties", "from": ["(.*i.*)", { "type": "string" }], "to": ["_$1", { "type": "number" }] }
+        </p>
+
+        <div class="form-group">
+            <label for="json-textarea">JSON</label>
+            <textarea class="form-control" id="json-textarea" rows="4">{
+    "properties": {
+        "additionalItems": true,
+        "items": { "type": "array" },
+        "foo": "str",
+        "baz": 67,
+        "bar": { "type": "string" }
+    },
+    "from": "Unknown",
+    "arr":[2,3,4]
+}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="patch-textarea">Patch</label>
+            <textarea class="form-control" id="patch-textarea" rows="5">[
+    { "op": "replace", "path": "/message", "value": "Patching JSON is fun" },
+    { "op": "add", "path": "/with", "value": "jsonpatch.me" },
+    { "op": "remove", "path": "/from" }
+]</textarea>
+        </div>
+
+        <div class="row">
+            <div class="col text-center mt-4">
+                <button id="patch-json" class="btn btn-primary">
+                    <!-- <span>Patch JSON</span> -->
+                    Patch JSON
+                    <!-- <span class="spinner-border spinner-border-sm ml-1 d-none" role="status" aria-hidden="true"></span> -->
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group form-group-result mb-0">
+            <label for="result-textarea">Result</label>
+            <textarea class="form-control" id="result-textarea" rows="10"></textarea>
+        </div>
+
+        <div class="alert alert-danger alert-response mt-5 mb-0 d-none" role="alert">
+            <span>Error:</span>
+            <span class="error-message ml-1"></span>
+        </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+
+</html>
