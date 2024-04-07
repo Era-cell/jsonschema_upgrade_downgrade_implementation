@@ -1,4 +1,5 @@
 import patchschema from "./index.js";
+import { matchschema } from "./index.js";
 
 const schema = {
     "properties": {
@@ -43,4 +44,6 @@ const schema = {
 
 // console.log(patchschema(schema, [{ "op": "reduce", "path": "/arr", "operation": "add" }]));
 
-console.log(patchschema(schema, [{ "op": "move_all", "path": "/properties", "from": ["(.*i.*)", { "type": "string" }], "to": ["_$1", { "type": "number" }] }]));
+// console.log(patchschema(schema, [{ "op": "move_all", "path": "/properties", "from": ["(.*i.*)", { "type": "string" }], "to": ["_$1", { "type": "number" }] }]));
+
+console.log(matchschema(schema, [{"key":"properties", "type":["array", "object"], "has":[{"key":"foo", "pattern":".*s$"}]}]));

@@ -233,4 +233,28 @@ const patchschema = (obj, patches) => {
     return obj;
 };
 
+const matchschema = (obj, conditions) => {
+    for (let condition of conditions){
+        if (!condition.hasOwnProperty("key")) return false;
+        if (condition.hasOwnProperty("absent") && condition["absent"] === true && obj.hasOwnProperty(condition["absent"])) return false;
+        
+        let keyword = condition["key"];
+        
+        if (!obj.hasOwnProperty(condition["key"])) return false;
+        
+        if (condition.hasOwnProperty("type")) {
+            if (Array.isArray(condition["type"]) && !condition["type"].some((type) => typeof obj[keyword] === type)) return false;
+            else if (typeof condition["type"] === "string" && typeof obj[keyword] !== condition["type"]) return false;
+        }
+        
+        if (condition.hasOwnProperty("const") && obj[keyword] !== condition["const"]) return false;
+        if (condition.hasOwnProperty("pattern") && !(obj[keyword]).match(condition["pattern"])) return false;
+        if (condition.hasOwnProperty("has") && !matchschema(obj[keyword], condition["has"])) return false;
+        
+    }
+    return true
+}
+
+export {matchschema};
+
 export default patchschema;
