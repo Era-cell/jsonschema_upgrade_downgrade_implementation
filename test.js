@@ -1,10 +1,10 @@
 import patchschema from "./index.js";
-import { matchschema } from "./index.js";
 
 const schema = {
     "properties": {
         "additionalItems": true,
-        "items": { "type": "array" },
+        "items": [{ "type": "array" }],
+        "type":["any", {}],
         "foo": "str",
         "baz": 67,
         "bar": { "type": "string" },
@@ -21,7 +21,6 @@ const schema = {
 
 // console.log(patchschema(schema, rules));
 // console.log(patchschema(schema, [{ "op": "split_and_join", "path": "/$anchor", "split_on": ":", "join_on": "_" }]));
-
 // console.log(patchschema(schema, [{ "op": "split_keyword", "path": "/dependencies", "conditions": [{ "to": "dependentRequired", "schema": { "type": "array" } }, { "to": "dependentSchemas", "schema": { "type": "object" } }] }]));
 // console.log(patchschema(schema, [{ "op": "concat", "path": "/arr", "with": "/" }]));
 // // -- you have options: provide new array using "array":["hello", "world"], "with": "substring"(default: "")
@@ -46,4 +45,4 @@ const schema = {
 
 // console.log(patchschema(schema, [{ "op": "move_all", "path": "/properties", "from": ["(.*i.*)", { "type": "string" }], "to": ["_$1", { "type": "number" }] }]));
 
-console.log(matchschema(schema, [{"key":"properties", "type":["array", "object"], "has":[{"key":"foo", "pattern":".*s$"}]}]));
+
