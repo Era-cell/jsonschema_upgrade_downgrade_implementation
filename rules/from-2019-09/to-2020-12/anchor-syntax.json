@@ -1,0 +1,10 @@
+{
+    "vocabulary": [ "https://json-schema.org/draft/2019-09/vocab/core" ],
+    "condition": [ 
+        { "operation": "has-key", "path": [], "value": "$anchor" },
+        { "operation": "match-pattern", "path": [ "$anchor" ], "value": ".*:.*" } 
+    ],
+    "transform": [
+        { "operation": "remove-substring", "path": [ "$anchor" ], "value": ":" } 
+    ]
+}

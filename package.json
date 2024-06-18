@@ -1,0 +1,16 @@
+{
+  "name": "dsl_language",
+  "version": "1.0.0",
+  "description": "DSL conditions transform engine",
+  "main": "applyRule.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "start"
+  },
+  "author": "",
+  "license": "ISC"
+}

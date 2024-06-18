@@ -1,12 +1,4 @@
-const deepGet = (obj, path) => path.reduce((o, p) => (o ? o[p] : undefined), obj);
-const deepSet = (obj, path, value) => {
-  path.slice(0, -1).reduce((o, p) => (o[p] = o[p] || {}), obj)[path.slice(-1)] = value;
-};
-const deepDelete = (obj, path) => {
-  const lastKey = path.pop();
-  const parent = deepGet(obj, path);
-  if (parent) delete parent[lastKey];
-};
+import { deepGet, deepSet, deepDelete } from './utilities.js';
 
 const operations = {
   'prefix-until-unique': (obj, { path, value }) => {
@@ -62,12 +54,13 @@ const operations = {
     deepSet(obj, to, value);
   },
   'add': (obj, { path, value }) => {
-    const target = deepGet(obj, path);
+    const target = deepGet(obj, path.slice(0, path.length - 1));
+    const lastKey = path[path.length - 1];
     if (Array.isArray(target)) {
-      if (value === -1) {
+      if (lastKey === "-") {
         target.push(value);
       } else {
-        target.push(value);
+        target.splice(lastKey, 0, value);
       }
     } else {
       deepSet(obj, path, value);
@@ -79,31 +72,4 @@ const operations = {
   }
 };
 
-const applyOperations = (obj, operationsArray) => {
-  operationsArray.forEach(op => {
-    const { operation, ...params } = op;
-    if (operations[operation]) {
-      operations[operation](obj, params);
-    } else {
-      console.error(`Unknown operation: ${operation}`);
-    }
-  });
-};
-
-// Example usage
-let jsonObj = {
-  "x-a": {
-    b: "hello",
-    c: "world"
-  },
-  d: [1, 2, 3],
-  "a": "hello"
-};
-
-const operationsArray = [
-  { operation: 'prefix-until-unique', path: ['a'], value: 'x-' },
-  { operation:'prefix-value', path: ['d'], value: 'x-' },
-];
-
-applyOperations(jsonObj, operationsArray);
-console.log(JSON.stringify(jsonObj, null, 2));
+export  {operations};
