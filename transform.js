@@ -63,13 +63,13 @@ const extractAllWalks = (schema, walker) =>{
 }
 
 const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs, rules) =>{
-    console.log("Schema in recursion: ", schema);
+    // console.log("Schema in recursion: ", schema);
 
     // change parent URI if $id is present
     if (schema.hasOwnProperty("$id")){
         const temp = parentURI;
         parentURI = normaliseAndSetParent(parentURI, schema["$id"]);
-        console.log("Parent URI resolve Before & After: ", temp, parentURI);
+        // console.log("Parent URI resolve Before & After: ", temp, parentURI);
         // console.log("------------ CURRENT--------------");
         // console.log("Fragment refs:", fragmentRefs);
         // spawn the refs to be corrected:
@@ -98,14 +98,14 @@ const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs,
             }
         }
     }
-    console.log("---walks-----");
-    console.log(JSON.stringify(allWalks), JSON.stringify(tweakedWalks));
+    // console.log("---walks-----");
+    // console.log(JSON.stringify(allWalks), JSON.stringify(tweakedWalks));
 
     // traverse the schema with filter down the refs using the walker and walk
 
     for(const {oldWalk, newWalk} of allWalks){
         const newRefs = filterAndCorrectRefs(refs, extractedRefs, oldWalk, newWalk);
-        console.log("New Refs: ", newRefs);
+        // console.log("New Refs: ", newRefs);
 
         let subschema = schema;
         for (const key of newWalk) {

@@ -51,11 +51,13 @@ const schema = {
     ]
 }  
 
+console.log("-----------------BEFORE----------------\n", JSON.stringify(schema, null, 2));
+
 const response = await frameAndGetReferences(schema)
 
 const {extractedRefs, locationRefs, fragmentRefs} = response;
 
-console.log(extractedRefs, fragmentRefs);
+// console.log(extractedRefs, fragmentRefs);
 // parentURI, walker, schema, refs, extractedRefs, fragmentRefs, rules
 const refs = [];
 for(let ref of locationRefs){
@@ -64,6 +66,12 @@ for(let ref of locationRefs){
 
 transform(null, walker_2020, schema, refs, extractedRefs, fragmentRefs, rules)
 
-console.log("Resultant schema:--\n", JSON.stringify(schema));
+for (let {ref_location, ref_fragment, ref_base_uri} of extractedRefs){
+    let schemaToTweakRef = schema;
+    for (let key of ref_location){
+        schemaToTweakRef = schemaToTweakRef[key];
+    }
+    schemaToTweakRef["$ref"] = ref_base_uri + "#/" + ref_fragment.join("/")
+}
 
-console.log((extractedRefs));
+console.log("-----------------AFTER----------------\n", JSON.stringify(schema, null, 2));
