@@ -16,7 +16,17 @@ const getIterables = (schema, conditions) => {
     return iterative_indices;
 };
 
-const getProcesssedPath = (path, iterableKey) =>{
+const checkCurlyPath = (conditions) => {
+    for (let i=0; i<conditions.length; i++) {
+        const path = conditions[i]["path"];
+        if (path.includes({})) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const getProcessedPath = (path, iterableKey) =>{
     const processed_path = [];
     for (const p of path) {
         if (typeof p === 'object') processed_path.push(iterableKey);
@@ -28,13 +38,15 @@ const getProcesssedPath = (path, iterableKey) =>{
 const applyRule = (schema, rule) => {
     const conditions = rule.condition;
     const transforms = rule.transform;
+    const pathMappings = [];
 
     const iterableIndices = getIterables(schema, conditions);
 
     for (const iterableKey of iterableIndices) {
         let conditionAgrees = true;
         for (const condition of conditions) {
-            const processed_path = getProcesssedPath(condition["path"], iterableKey);
+            // path: ["properties", {}]  --> path: ["properties", foo] for1st iterableKey and so on
+            const processed_path = getProcessedPath(condition["path"], iterableKey);
             if (!checkCondition({ "operation": condition.operation, "path": processed_path, "value": condition.value }, schema)) {
                 conditionAgrees = false;
                 break;
@@ -44,60 +56,71 @@ const applyRule = (schema, rule) => {
             for (const transform of transforms) {
                 if (transform.hasOwnProperty("path")){
                     const temp = [...transform["path"]];
-                    transform["path"] = getProcesssedPath(transform["path"], iterableKey);
+                    transform["path"] = getProcessedPath(transform["path"], iterableKey);
                     const { operation, ...params } = transform;
                     operations[operation](schema, params)
                     transform["path"] = temp;
                 }else{
                     const temp_from = [...transform["from"]];
                     const temp_to = [...transform["to"]];
-                    transform["from"] = getProcesssedPath(transform["from"], iterableKey);
-                    transform["to"] = getProcesssedPath(transform["to"], iterableKey);
+                    transform["from"] = getProcessedPath(transform["from"], iterableKey);
+                    transform["to"] = getProcessedPath(transform["to"], iterableKey);
                     const { operation, ...params } = transform;
                     operations[operation](schema, params)
+                    pathMappings.push({oldWalk: replaceDashWithIndex(schema, deepCopy(transform["from"])), newWalk: replaceDashWithIndex(schema, deepCopy(transform["to"]))})
                     transform["from"] = temp_from;
                     transform["to"] = temp_to;
                 }
             }
         }
     }
-
+    return pathMappings;
 };
+
+const replaceDashWithIndex = (schema, path) =>{
+    let temp_schema = deepCopy(schema);
+    for (let i=0; i<path.length; i++) {
+        if (path[i] === "-" && Array.isArray(temp_schema)) {
+            path[i] = temp_schema.length - 1;
+        }
+        temp_schema = temp_schema[path[i]];
+    }
+    return path;
+}   
 
 const applyTest = (test, rule) => {
     const from = test["from"];
-    // console.log(from);
+    console.log(from);
     applyRule(from, rule);
-    // console.log(from, test["to"]);
+    console.log(from, test["to"]);
     return deepEqual(from, test["to"]);
 }
 
 const rule = {
     "vocabulary": "https://json-schema.org/draft/2019-09/vocab/applicator",
     "condition": [ 
-        { "operation": "not-has-key", "path": [], "value": "prefixItems" },
-        { "operation": "has-key", "path": [], "value": "items" },
-        { "operation": "has-key", "path": [], "value": "additionalItems" },
-        { "operation": "type-is", "path": [ "items" ], "value": "array" }
+        { "operation": "has-key", "path": [] }
     ],
     "transform": [
-        { "operation": "move", "to": [ "prefixItems" ], "from": [ "items" ] },
-        { "operation": "move", "to": [ "items" ], "from": [ "additionalItems" ] }
+        { "operation": "move", "to": [ "properties", {}, "required" ], "from": [ "required", {} ] }
     ]
 }
 const test = {
     "title": "`items` is an array, additionalItems is present",
     "from": {
-        "items": [ { "type": "string" } ],
-        "additionalItems": false
+        "required": ["foo"]
     },
     "to": {
-        "prefixItems": [ { "type": "string" } ],
-        "items": false
+        "properties":{
+            "foo":{
+                "required": true
+            }
+        }
     }
 }
-console.log(applyTest(test, rule));
+// console.log(applyTest(test, rule));
 
 export {
-    applyTest
+    applyTest,
+    applyRule
 }

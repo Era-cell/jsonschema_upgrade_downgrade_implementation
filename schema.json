@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com",
+  "if":{
+    "$id": "subid",
+    "type": "string",
+    "$defs":{
+      "r1": {
+        "type": "boolean",
+        "$id": "subah",
+        "$defs":{
+          "bar":{
+            "type": "array"
+          }
+        }
+      },
+      "r2": {
+        "$id": "subid/subid2",
+        "type": "object",
+        "properties":{
+          "rr":{
+            "$id": "../panda",
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "foo":{
+      "$id": "https://example.com/hello1",
+      "properties":{
+        "choco":{
+          "$ref": "/subid" 
+        },
+        "late":{
+          "$ref": "subid/subid2"
+        },
+        "eater":{
+          "$ref": "subah#/$defs/bar"
+        }
+      }
+    }
+  }
+}

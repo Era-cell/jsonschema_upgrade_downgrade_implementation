@@ -84,25 +84,25 @@ const deepGet = (obj, path) => {
       return true;
   };
 
-  function deepCopy(obj) {
-    if (typeof obj !== 'object' || obj === null) {
-      // Base case: return the same value for non-objects
-      return obj;
-    }
-  
-    // Create a new object/array of the same type
-    const copy = Array.isArray(obj) ? [] : {};
-  
-    // Recursively copy properties
-    for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        copy[key] = deepCopy(obj[key]);
-      }
-    }
-  
-    // Merge with the new object/array
-    return Object.assign(Object.create(Object.getPrototypeOf(obj)), copy);
+function deepCopy(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj; // Base case: return the same value for non-objects
   }
+
+  if (Array.isArray(obj)) {
+    return obj.map(deepCopy); // Deep copy for arrays
+  }
+
+  const copy = {};
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      copy[key] = deepCopy(obj[key]); // Deep copy for objects
+    }
+  }
+
+  return copy;
+}
+  
 
 const readJsonFile = (filePath) => {
 return new Promise((resolve, reject) => {
