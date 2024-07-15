@@ -62,8 +62,8 @@ const extractAllWalks = (schema, walker) =>{
     return allWalks;
 }
 
-const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs, rules) =>{
-    // console.log("Schema in recursion: ", schema);
+const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs, rules, wwl) =>{
+    console.log("Schema in recursion: ", schema, wwl);
 
     // change parent URI if $id is present
     if (schema.hasOwnProperty("$id")){
@@ -102,7 +102,7 @@ const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs,
     // console.log(JSON.stringify(allWalks), JSON.stringify(tweakedWalks));
 
     // traverse the schema with filter down the refs using the walker and walk
-
+    // console.log(allWalks);
     for(const {oldWalk, newWalk} of allWalks){
         const newRefs = filterAndCorrectRefs(refs, extractedRefs, oldWalk, newWalk);
         // console.log("New Refs: ", newRefs);
@@ -113,7 +113,7 @@ const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs,
             if (!subschema) break; // Exit if subschema is not found
         }
 
-        transform(parentURI, walker, subschema, newRefs, extractedRefs, fragmentRefs, rules);
+        transform(parentURI, walker, subschema, newRefs, extractedRefs, fragmentRefs, rules, newWalk);
     }
 
 }
