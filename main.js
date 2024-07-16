@@ -49,7 +49,7 @@ const schema = {
         {},
         {"type": "array"}
     ],
-    "items": [{"prefixItems": "string"}],
+    "items": [{"items": []}],
     "additionalItems": {},
     "prefixItems": "hello"
 }  

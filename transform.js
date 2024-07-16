@@ -1,6 +1,8 @@
 import { applyRule } from "./apply.js";
 import { URL } from 'url';
 import { deepEqual } from "./utilities.js";
+import { checkCondition } from './checkschema.js';
+import { log } from "console";
 
 const normaliseAndSetParent  = (parentBaseURI, newId) =>{
     if (parentBaseURI==null) return newId;
@@ -42,19 +44,28 @@ const extractAllWalks = (schema, walker) =>{
     for(const keyword of Object.keys(schema)){
         // not a walkable subscehma 
         if (!(keyword in walker)) continue;
+        let walk_type = "unknown";
+        if(Array.isArray(walker[keyword].type)){
+            for(let {type, conditions} of walker[keyword].type){
+                if (conditions.every((condition)=>(checkCondition(condition, schema)))){
+                    walk_type = type;
+                    break;
+                }
+            }
+        }else walk_type = walker[keyword].type;
 
-        if(walker[keyword].type=="array"){
+        if(walk_type=="array"){
             for(let i=0; i<schema[keyword].length; i++){
                 const walk = {oldWalk: [keyword, i], newWalk: [keyword, i]}
                 allWalks.push(walk);
             }
         }
-        else if(walker[keyword].type=="object"){
+        else if(walk_type=="object"){
             for (const property of Object.keys(schema[keyword])){
                 const walk = {oldWalk: [keyword, property], newWalk: [keyword, property]}
                 allWalks.push(walk);
             }
-        }else{
+        }else if(walk_type=="value"){
             const walk = {oldWalk: [keyword], newWalk: [keyword]}
             allWalks.push(walk);
         }
@@ -63,7 +74,7 @@ const extractAllWalks = (schema, walker) =>{
 }
 
 const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs, rules, wwl) =>{
-    console.log("Schema in recursion: ", schema, wwl);
+    // console.log("Schema in recursion: ", schema, wwl);
 
     // change parent URI if $id is present
     if (schema.hasOwnProperty("$id")){
@@ -78,28 +89,16 @@ const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs,
                 refs.push({ref_type: "ref_fragment", ref_id: id, ref_correction_index: 0});
             }
         }
-
         // console.log("after spawning:", refs);
     }
 
     // extract all walks:
     const allWalks = extractAllWalks(schema, walker);
-    const tweakedWalks = [];
 
     // for every rule:
     for (const [rule, rule_name] of rules) {
-        tweakedWalks.push(...applyRule(schema, rule));
+        applyRule(schema, rule, allWalks);
     }
-
-    for (const walk of allWalks){
-        for(const {oldWalk, newWalk} of tweakedWalks){
-            if (deepEqual(walk.oldWalk, oldWalk)){
-                walk.newWalk = newWalk;
-            }
-        }
-    }
-    // console.log("---walks-----");
-    // console.log(JSON.stringify(allWalks), JSON.stringify(tweakedWalks));
 
     // traverse the schema with filter down the refs using the walker and walk
     // console.log(allWalks);
@@ -115,7 +114,6 @@ const transform = (parentURI, walker, schema, refs, extractedRefs, fragmentRefs,
 
         transform(parentURI, walker, subschema, newRefs, extractedRefs, fragmentRefs, rules, newWalk);
     }
-
 }
 
 export {

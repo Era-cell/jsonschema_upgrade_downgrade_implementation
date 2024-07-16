@@ -7,4 +7,4 @@ before fragment after fragment index moves
 
 TODO:
 
-1. resolve dynamic walker based on schema.....
+1. implement $anchor transform

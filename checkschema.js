@@ -42,6 +42,7 @@ const operations = {
 };
 
 
+// check single condition at a time
 const checkCondition = (condition, target) => {
     const { operation, path, value } = condition;
     const subject = deepGet(target, path);

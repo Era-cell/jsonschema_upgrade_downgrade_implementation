@@ -35,13 +35,11 @@ const getProcessedPath = (path, iterableKey) =>{
     return processed_path;
 }
 
-const applyRule = (schema, rule) => {
+const applyRule = (schema, rule, allWalks) => {
     const conditions = rule.condition;
     const transforms = rule.transform;
-    const pathMappings = [];
 
     const iterableIndices = getIterables(schema, conditions);
-
     for (const iterableKey of iterableIndices) {
         let conditionAgrees = true;
         for (const condition of conditions) {
@@ -67,25 +65,32 @@ const applyRule = (schema, rule) => {
                     transform["to"] = getProcessedPath(transform["to"], iterableKey);
                     const { operation, ...params } = transform;
                     operations[operation](schema, params)
-                    pathMappings.push({oldWalk: replaceDashWithIndex(schema, deepCopy(transform["from"])), newWalk: replaceDashWithIndex(schema, deepCopy(transform["to"]))})
+                    processTransformWalk(schema, transform["from"], transform["to"], allWalks);
                     transform["from"] = temp_from;
                     transform["to"] = temp_to;
                 }
             }
         }
     }
-    return pathMappings;
 };
 
-const replaceDashWithIndex = (schema, path) =>{
+const processTransformWalk = (schema, from_path ,to_path, allWalks) =>{
     let temp_schema = deepCopy(schema);
-    for (let i=0; i<path.length; i++) {
-        if (path[i] === "-" && Array.isArray(temp_schema)) {
-            path[i] = temp_schema.length - 1;
+    console.log(from_path, to_path);
+    for (let i=0; i<to_path.length; i++) {
+        if (to_path[i] === "-" && Array.isArray(temp_schema)) {
+            to_path[i] = temp_schema.length - 1;
         }
-        temp_schema = temp_schema[path[i]];
+        temp_schema = temp_schema[to_path[i]];
     }
-    return path;
+
+    // Assuming the rules wil always have thier "from" length less than or equal to walks
+    for (let i in allWalks) {
+        if (from_path.every((val, index)=>allWalks[i].oldWalk[index]==val)) {
+            allWalks[i].newWalk = to_path.concat(allWalks[i].oldWalk.slice(from_path.length));
+            break;
+        }
+    }    
 }   
 
 const applyTest = (test, rule) => {

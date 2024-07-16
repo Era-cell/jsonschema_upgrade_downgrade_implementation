@@ -80,3 +80,17 @@ const tweakedWalks = applyRule(schema, rule);
 
 // // console.log(schema);
 // console.log(normaliseAndSetParent(null, schema["$id"]));
+
+console.log(allWalks);
+
+// tweakedWalks.push(...applyRule(schema, rule, allWalks));
+
+// for (const walk of allWalks){
+//     for(const {oldWalk, newWalk} of tweakedWalks){
+//         if (deepEqual(walk.oldWalk, oldWalk)){
+//             walk.newWalk = newWalk;
+//         }
+//     }
+// }
+// console.log("---walks-----");
+// console.log(JSON.stringify(allWalks), JSON.stringify(tweakedWalks));

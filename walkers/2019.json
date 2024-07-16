@@ -46,20 +46,24 @@
   },
   "items": {
     "vocabulary": "https://json-schema.org/draft/2019-09/vocab/applicator",
-    "type": [ "array", "value" ],
+    "type": [ 
+      {
+        "type": "array",
+        "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "array" } ]
+      }, 
+      {
+        "type": "value",
+        "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "object" } ]
+      }
+    ],
     "walker": "jsonschema-2019-09"
   },
   "additionalItems": {
     "vocabulary": "https://json-schema.org/draft/2019-09/vocab/applicator",
-    "type": "dynamic",
-    "conditions": [
+    "type": [
       {
-      "condition": [ { "operation": "type-is", "path": [ "items" ], "value": "array" }, { "operation": "has-key", "path": [], "value": "items" } ],
-      "type": "value"
-      },
-      {
-        "condition": [ { "operation": "type-is", "path": [ "items" ], "value": "object" }, { "operation": "has-key", "path": [], "value": "items" } ],
-        "type": "unknown"
+        "type": "value",
+        "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "array" }, { "operation": "type-is", "path": [ "additionalItems" ], "value": "object" } ]
       }
     ],
     "walker": "jsonschema-2019-09"
