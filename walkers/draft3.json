@@ -1,0 +1,64 @@
+{
+    "properties": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft3"
+    },
+    "patternProperties": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft3"
+    },
+    "additionalProperties": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft3"
+    },
+    "items": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": [ 
+        {
+          "type": "array",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "array" } ]
+        }, 
+        {
+          "type": "value",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "object" } ]
+        }
+      ],
+      "walker": "jsonschema-draft3"
+    },
+    "additionalItems": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft3"
+    },
+    "dependencies": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft3"
+    },
+    "extends": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": [ 
+        {
+          "type": "array",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "extends" }, { "operation": "type-is", "path": [ "extends" ], "value": "array" } ]
+        }, 
+        {
+          "type": "value",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "extends" }, { "operation": "type-is", "path": [ "extends" ], "value": "object" } ]
+        }
+      ],
+      "walker": "jsonschema-draft3"
+    },
+    "disallow": {
+      "vocabulary": "http://json-schema.org/draft-03/schema#",
+      "type": [ 
+        {
+          "type": "array",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "disallow" }, { "operation": "type-is", "path": [ "disallow" ], "value": "array" } ]
+        }
+      ]
+    }
+  }

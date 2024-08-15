@@ -1,4 +1,4 @@
-import { deepGet, deepSet, deepDelete } from './utilities.js';
+import { deepGet, deepSet, deepDelete, deepEqual } from './utilities.js';
 
 const checkType = (subject, predicate) => {
     if (Array.isArray(predicate)) {
@@ -27,18 +27,17 @@ const checkType = (subject, predicate) => {
 
 // Operation functions
 const operations = {
-  'type-is': (target, value) => checkType(target, value),
-  'equals': (target, value) => target === value,
+  'type-is': (target, value) => Array.isArray(value)? value.some((type) => checkType(target, type)): checkType(target, value),
+  'equals': (target, value) =>  deepEqual(target, value),
   'not-equals': (target, value) => target !== value,
   'size-equals': (target, value) => Array.isArray(target) || typeof target === 'object' ? Object.keys(target).length === value : false,
   'contains': (target, value) => Array.isArray(target) ? target.includes(value) : false,
-  'contains-type': (target, value) => Array.isArray(target) ? target.some(item => checkType(target, value)) : false,
+  'contains-type': (target, value) => Array.isArray(target) ? target.some(item => checkType(item, value)) : false,
   'has-key': (target, value) => typeof target === 'object' && target !== null ? value in target : false,
-  "not-has-key": (target, value) => typeof target === 'object' && target !== null ? !(value in target) : false,
+  'not-has-key': (target, value) => typeof target === 'object' && target !== null ? !(value in target) : false,
   'min-properties': (target, value) => typeof target === 'object' && target !== null ? Object.keys(target).length >= value : false,
   'maximum': (target, value) => typeof target === 'number' ? target <= value : false,
   'match-pattern': (target, value) => typeof target === 'string' ? new RegExp(value).test(target) : false,
-  'key-absent': (target, value) => typeof target === 'object' && target !== null ? !(value in target) : false
 };
 
 
@@ -49,4 +48,4 @@ const checkCondition = (condition, target) => {
     return operations[operation](subject, value);
 };
 
-export {checkCondition};
+export {checkCondition, checkType};

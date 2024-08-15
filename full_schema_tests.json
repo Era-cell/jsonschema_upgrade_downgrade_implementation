@@ -1,0 +1,202 @@
+{
+  "draft1": [
+    {
+      "$schema": "http://json-schema.org/draft-01/schema#",
+      "uniqueItems": false,
+      "maxDecimal": 3
+    }
+  ],
+  "draft2": [
+    {
+      "$schema": "http://json-schema.org/draft-01/hyper-schema#",
+      "$id": "boom",
+      "additionalItems": 234,
+      "patternProperties": "hello",
+      "required": {},
+      "dependencies": 12,
+      "exclusiveMaximum": true,
+      "exclusiveMinimum": true
+    },
+    {
+      "$schema": "http://json-schema.org/draft-01/hyper-schema#",
+      "properties": {
+        "foo": {
+          "optional": true,
+          "required": 12,
+          "requires": "booo",
+          "$defs": {
+            "car": {
+              "requires": "wheels"
+            }
+          }
+        },
+        "booo": {
+          "required": "hello",
+          "optional": false,
+          "requires": { "type": "boolean" }
+        }
+      },
+      "maximum": 3,
+      "maximumCanEqual": false
+    }
+  ],
+  "draft3": [
+    {
+      "$schema": "http://json-schema.org/draft-03/schema#",
+      "id": "http://example.com/v2",
+      "properties": {
+        "foo": {
+          "disallow": [{}, "any", "string"],
+          "$ref": "#/extends"
+        },
+        "jam": {
+          "disallow": [{}, "any", "string"]
+        },
+        "bar": {
+          "$ref": "#/properties/jam/disallow/0",
+          "dependencies": {
+            "foo": "bar"
+          }
+        },
+        "nodefshere": {
+          "id": "c2",
+          "extends": [{ "type": "string" }, { "type": "number" }]
+        }
+      },
+      "divisiblBy": 3,
+      "extends": { "$ref": "c2#/extends/1" },
+      "disallow": [{}]
+    }
+  ],
+  "draft4": [
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "id": "http://example.com/v2",
+      "maximum": 5,
+      "exclusiveMaximum": true,
+      "minimum": 1,
+      "exclusiveMinimum": false
+    }
+  ],
+  "draft7": [
+    {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "http://example.com/vi",
+      "allOf": [
+        {
+          "$ref": "#/definitions/vim/dependencies/ubuntu",
+          "properties": { "cae": {} }
+        }
+      ],
+      "properties": {
+        "foo": {
+          "$id": "chi",
+          "const": "bar"
+        }
+      },
+      "definitions": {
+        "vim": {
+          "dependencies": {
+            "ubuntu": { "type": "object" },
+            "version": ["ubuntu"]
+          }
+        }
+      }
+    },
+    {
+      "$id": "http://example.com/vi",
+      "properties": {
+        "foo": {
+          "$defs": ["Object"],
+          "x-required": 12
+        },
+        "booo": {
+          "x-required": "hello"
+        }
+      },
+      "maximum": 3,
+      "x-$schema": "http://json-schema.org/draft-02/schema#",
+      "dependencies": {
+        "booo": {
+          "type": "boolean"
+        },
+        "foo": ["booo"]
+      },
+      "exclusiveMaximum": 3,
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "required": ["booo"]
+    }
+  ],
+  "draft6": [],
+  "2019-09": [
+    {
+      "$schema": "https://json-schema.org/draft/2019-09/schema",
+      "$id": "http://example.com/v2",
+      "properties": {
+        "foo": {
+          "disallow": [{}, "any", "string"],
+          "$ref": "#/allOf/0"
+        },
+        "bar": {
+          "dependencies": {
+            "foo": "bar"
+          }
+        }
+      },
+      "divisiblBy": 3,
+      "allOf": [{ "$ref": "c2#/allOf/1" }],
+      "$defs": {
+        "car": {
+          "$id": "c2",
+          "allOf": [{ "type": "string" }, { "type": "number" }]
+        }
+      }
+    },
+    {
+      "$schema": "https://json-schema.org/draft/2019-09/schema",
+      "$id": "https://example.com",
+      "properties": {
+        "foola": {
+          "$ref": "https://example.com/bar#ba:r"
+        },
+        "barla": {
+          "$ref": "#/additionalItems"
+        }
+      },
+      "$anchor": "fo:rr",
+      "contains": {
+        "type": "boolean"
+      },
+      "$defs": {
+        "foo": {
+          "$id": "foo",
+          "type": "string",
+          "$defs": {
+            "bar": {
+              "$anchor": "ba:r",
+              "$id": "bar",
+              "type": "integer",
+              "contains": {
+                "$anchor": "bar"
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {},
+        {},
+        {
+          "type": "array"
+        }
+      ],
+      "items": [
+        {
+          "type": "number"
+        }
+      ],
+      "additionalItems": {},
+      "prefixItems": "hello"
+    }
+  ]
+}
