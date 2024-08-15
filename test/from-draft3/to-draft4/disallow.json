@@ -1,0 +1,43 @@
+[
+    {
+        "title": "`disallow` is present and value equals to any",
+        "from": {
+            "disallow": "any"
+        },
+        "to": {
+            "not": {}
+        }
+    },
+    {
+        "title": "`disallow` is present and contains `any` in it",
+        "from": {
+            "disallow": [ "any", {}, "string" ]
+        },
+        "to": {
+            "not": {}
+        }
+    },
+    {
+        "title": "`disallow` is present and contains atleast one object",
+        "from": {
+            "disallow": [ {}, { "type": "string"} ]
+        },
+        "to": {
+            "allOf": [
+                { "not": { "type": "string"} },
+                { "not": {} }
+            ]
+        }
+    },
+    {
+        "title": "`disallow` is present and is an array of strings",
+        "from": {
+            "disallow": [ "number", "string" ]
+        },
+        "to": {
+            "allOf": [
+                { "not": { "type": [ "number", "string" ] } }
+            ]
+        }
+    }
+]

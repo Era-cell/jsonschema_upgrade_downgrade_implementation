@@ -1,0 +1,76 @@
+{
+    "items": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": [ 
+        {
+          "type": "array",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "array" } ]
+        }, 
+        {
+          "type": "value",
+          "conditions": [ { "operation": "has-key", "path": [], "value": "items" }, { "operation": "type-is", "path": [ "items" ], "value": "object" } ]
+        }
+      ],
+      "walker": "jsonschema-draft6"
+    },
+    "additionalItems": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft6"
+    },
+    "contains": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft6"
+    },
+    "properties": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft6"
+    },
+    "patternProperties": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft6"
+    },
+    "additionalProperties": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft6"
+    },
+    "dependencies": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft6"
+    },
+    "propertyNames": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft6"
+    },
+    "allOf": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "array",
+      "walker": "jsonschema-draft6"
+    },
+    "anyOf": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "array",
+      "walker": "jsonschema-draft6"
+    },
+    "oneOf": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "array",
+      "walker": "jsonschema-draft6"
+    },
+    "not": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "value",
+      "walker": "jsonschema-draft6"
+    },
+    "definitions": {
+      "vocabulary": "http://json-schema.org/draft-06/schema#",
+      "type": "object",
+      "walker": "jsonschema-draft6"
+    }
+  }

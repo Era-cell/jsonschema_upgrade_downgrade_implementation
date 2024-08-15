@@ -1,0 +1,65 @@
+{
+  "properties": {
+    "vocabulary": "http://json-schema.org/draft-02/schema#",
+    "type": "object",
+    "walker": "jsonschema-draft2"
+  },
+  "additionalProperties": {
+    "vocabulary": "http://json-schema.org/draft-02/schema#",
+    "type": "value",
+    "walker": "jsonschema-draft2"
+  },
+  "items": {
+    "vocabulary": "http://json-schema.org/draft-02/schema#",
+    "type": [
+      {
+        "type": "array",
+        "conditions": [
+          { "operation": "has-key", "path": [], "value": "items" },
+          { "operation": "type-is", "path": ["items"], "value": "array" }
+        ]
+      },
+      {
+        "type": "value",
+        "conditions": [
+          { "operation": "has-key", "path": [], "value": "items" },
+          { "operation": "type-is", "path": ["items"], "value": "object" }
+        ]
+      }
+    ],
+    "walker": "jsonschema-draft2"
+  },
+  "requires": {
+    "vocabulary": "http://json-schema.org/draft-02/schema#",
+    "type": [
+      {
+        "type": "value",
+        "conditions": [
+          { "operation": "has-key", "path": [], "value": "items" },
+          { "operation": "type-is", "path": ["items"], "value": "object" }
+        ]
+      }
+    ],
+    "walker": "jsonschema-draft2"
+  },
+  "extends": {
+    "vocabulary": "http://json-schema.org/draft-02/schema#",
+    "type": [
+      {
+        "type": "array",
+        "conditions": [
+          { "operation": "has-key", "path": [], "value": "items" },
+          { "operation": "type-is", "path": ["items"], "value": "array" }
+        ]
+      },
+      {
+        "type": "value",
+        "conditions": [
+          { "operation": "has-key", "path": [], "value": "items" },
+          { "operation": "type-is", "path": ["items"], "value": "object" }
+        ]
+      }
+    ],
+    "walker": "jsonschema-draft2"
+  }
+}

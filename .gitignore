@@ -1,2 +1,10 @@
 node_modules
 package-lock.json
+build
+complete_test
+backup_aply.js
+dump.js
+frontend.js
+index.html
+main.scss
+server.js

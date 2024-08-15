@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 const deepGet = (obj, path) => {
     let currentObj = obj;
     for (let i = 0; i < path.length; i++) {
@@ -50,6 +48,7 @@ const deepGet = (obj, path) => {
     }
     let lastKey = path[path.length - 1];
     if (lastKey === '-') lastKey = currentObj.length - 1;
+    // console.log(obj, currentObj, lastKey);
     if (Array.isArray(currentObj)) {
       currentObj.splice(lastKey, 1);
     } else {
@@ -102,54 +101,36 @@ function deepCopy(obj) {
 
   return copy;
 }
-  
 
-const readJsonFile = (filePath) => {
-return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-        reject(err);
-    } else {
-        resolve(JSON.parse(data));
+const readJsonFile = async (filePath) => {
+  if (typeof window !== 'undefined') {
+    // Browser environment
+    try {
+      const response = await fetch(filePath);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error loading JSON in the browser:', error);
+      throw error;
     }
-    });
-});
-};
-
-const obj = {
-    "contains": { "type": "string" },
-    "minContains": 2,
-    "unevaluatedItems": false,
-    "allOf": [
-    ]
+  } else if (typeof process !== 'undefined') {
+    // Node.js environment
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    try {
+      const absolutePath = path.resolve(filePath);
+      const data = await fs.readFile(absolutePath, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error loading JSON in Node.js:', error);
+      throw error;
+    }
+  } else {
+    throw new Error('Unknown environment: Unable to load JSON');
+  }
 }
-
-// const move = (obj, from = [ "contains" ] , to = [ "allOf" , "-" ]) => {
-//     const value = deepGet(obj, from);
-//     deepDelete(obj, from);
-//     deepSet(obj, to, value);
-//   }
-// move(obj)
-
-// const add = (obj, path = [ "allOf", "-" ], value = 1) => {
-//     const target = deepGet(obj, path.slice(0, path.length-1));
-//     console.log(target);
-//     if (Array.isArray(target)) {
-//       if (path[path.length - 1] === "-") {
-//         target.push(value);
-//       } else {
-//         target.splice(path[path.length - 1], 0, value);
-//       }
-//     } else {
-//       deepSet(obj, path, value);
-//     }
-//   }
-
-//   add(obj)
-
-// console.log(JSON.stringify(obj, null, 2));
-
-// console.log(deepGet(obj, ["allOf"]));
 
 export {
     deepGet,
